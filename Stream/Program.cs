@@ -1,13 +1,23 @@
-var builder = WebApplication.CreateBuilder(args);
+using Stream.Brokers.Storages;
 
-builder.Services.AddControllersWithViews();
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+        builder.Services.AddControllersWithViews();
 
-app.UseStaticFiles();
+        builder.Services.AddTransient<IStorageBroker, StorageBroker>();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+        var app = builder.Build();
 
-app.Run();
+        app.UseStaticFiles();
+
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Video}/{action=Upload}/{id?}");
+
+        app.Run();
+    }
+}
