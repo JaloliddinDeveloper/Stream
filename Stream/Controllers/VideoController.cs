@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stream.Brokers.Storages;
 using Stream.Models.Foundations.Videos;
+using Tynamix.ObjectFiller;
 
 namespace Stream.Controllers
 {
-    public class VideoController:Controller
+    public class VideoController : Controller
     {
-      private readonly IStorageBroker storageBroker;
+        private readonly IStorageBroker storageBroker;
 
         public VideoController(IStorageBroker storageBroker)
         {
@@ -19,17 +20,43 @@ namespace Stream.Controllers
             IQueryable<VideoMetadata> videos = this.storageBroker.SelectAllVideoMetadatas();
             return View(videos);
         }
-
-        public IActionResult AddVideo()
+        [HttpPost]
+        public async Task<IActionResult> AddVideo()
         {
-            return View();
+            var filler = CreateVideoFiller();
+
+            for (int i = 0; i < 500000; i++)
+            {
+                var video = filler.Create();
+                await this.storageBroker.InsertVideoMetadataAsync(video);
+            }
+
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddVideo(VideoMetadata video)
+        private static Filler<VideoMetadata> CreateVideoFiller()
         {
-            await this.storageBroker.InsertVideoMetadataAsync(video);
-            return RedirectToAction("Index");
+            var filler = new Filler<VideoMetadata>();
+            var random = new Random();
+
+            string[] titles =
+            {
+                 "Introduction to C#",
+                 "Blazor for Beginners",
+                 "ASP.NET Core MVC Guide",
+                 "Entity Framework Best Practices",
+                 "Deploying .NET Apps",
+                 "Microservices with .NET",
+                 "Cloud Computing with Azure",
+                 "Building RESTful APIs",
+                 "Machine Learning in .NET",
+                 "Advanced LINQ Techniques"
+            };
+
+            filler.Setup()
+                .OnProperty(video => video.Title).Use(() => titles[random.Next(titles.Length)]);
+
+            return filler;
         }
     }
 }
