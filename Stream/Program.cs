@@ -16,7 +16,7 @@ internal class Program
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Video}/{action=Upload}/{id?}");
+            pattern: "{controller=Video}/{action=Index}/{id?}");
 
         app.Run();
     }

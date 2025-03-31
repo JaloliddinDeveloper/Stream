@@ -1,4 +1,5 @@
-﻿@{
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
     ViewData["Title"] = "Video Yuklash";
 }
 
@@ -11,18 +12,8 @@
 
 <form asp-controller="Video" asp-action="Upload" method="post" enctype="multipart/form-data">
     <div class="mb-3">
-        <label for="file" class="form-label">Video fayl:</label>
-        <input type="file" class="form-control" name="file" required />
-    </div>
-
-    <div class="mb-3">
         <label for="title" class="form-label">Sarlavha:</label>
-        <input type="text" class="form-control" name="title" required />
-    </div>
-
-    <div class="mb-3">
-        <label for="description" class="form-label">Tavsif:</label>
-        <textarea class="form-control" name="description" required></textarea>
+        <input type="text" class="form-control" name="Title" required />
     </div>
 
     <button type="submit" class="btn btn-primary">Yuklash</button>

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Stream.Brokers.Google;
 using Stream.Brokers.Storages;
 using Stream.Models.Foundations.Videos;
-using System.Threading.Tasks;
 
 namespace Stream.Controllers
 {
@@ -18,7 +16,7 @@ namespace Stream.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IQueryable videos = this.storageBroker.SelectAllVideoMetadatas();
+            IQueryable<VideoMetadata> videos = this.storageBroker.SelectAllVideoMetadatas();
             return View(videos);
         }
 
@@ -31,7 +29,7 @@ namespace Stream.Controllers
         public async Task<IActionResult> AddVideo(VideoMetadata video)
         {
             await this.storageBroker.InsertVideoMetadataAsync(video);
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Stream.Brokers.Storages
             string connection =
                 this.configuration.GetConnectionString("DefaultConnection");
 
+            //optionsBuilder.UseSqlServer(connection);
             optionsBuilder.UseMySql(connection,
                 ServerVersion.AutoDetect(connection));
         }
@@ -45,5 +46,7 @@ namespace Stream.Brokers.Storages
 
             return @object;
         }
+
+        public override void Dispose() { }
     }
 }
