@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stream.Brokers.Storages;
 using Stream.Models.Foundations.Videos;
 using Tynamix.ObjectFiller;
@@ -15,13 +16,22 @@ namespace Stream.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
+            const int pageSize = 500; 
             IQueryable<VideoMetadata> videos = this.storageBroker.SelectAllVideoMetadatas();
-            return View(videos);
-        }
 
-      
+            var videoList = await videos.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var totalVideos = await videos.CountAsync();
+
+            var totalPages = (int)Math.Ceiling(totalVideos / (double)pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(videoList);
+        }
 
         public async Task<IActionResult> AddVideo()
         {
