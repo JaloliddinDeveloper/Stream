@@ -1,6 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using Stream.Models.Foundations.Videos
-@model IQueryable<VideoMetadata>
+@model List<VideoMetadata>
 
 <h2 class="page-title">Video List</h2>
 <a asp-action="AddVideo" class="btn btn-add">➕ Add Video</a>
@@ -22,13 +22,38 @@
                     <td>@video.Title</td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@video.Id" class="btn edit-btn">✏️ Edit</a>
-                        <a asp-action="Delete" asp-route-id="@video.Id" class="btn delete-btn">🗑️ Delete</a>
+                        <a asp-action="Delete" asp-route-id="@video.Id" class="btn delete-btn">🗑 Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<div class="pagination">
+    @if (ViewBag.CurrentPage > 1)
+    {
+        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" class="btn pagination-btn">« Previous</a>
+    }
+
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        if (i == ViewBag.CurrentPage)
+        {
+            <span class="current-page">@i</span>
+        }
+        else
+        {
+            <a asp-action="Index" asp-route-page="@i" class="btn pagination-btn">@i</a>
+        }
+    }
+
+    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+    {
+        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" class="btn pagination-btn">Next »</a>
+    }
+</div>
+
 
 <style>
     /* Asosiy sahifa uchun */
