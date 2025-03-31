@@ -20,6 +20,7 @@ namespace Stream.Controllers
             IQueryable<VideoMetadata> videos = this.storageBroker.SelectAllVideoMetadatas();
             return View(videos);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddVideo()
         {

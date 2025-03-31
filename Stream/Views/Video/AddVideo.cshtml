@@ -2,19 +2,107 @@
 @using Stream.Models.Foundations.Videos
 @model VideoMetadata
 
-<h2>Add Video</h2>
+<div class="video-form-container">
+    <h2 class="form-title">Add Video</h2>
 
-<form asp-action="AddVideo" method="post">
-    <div class="form-group">
-        <label asp-for="Title" class="control-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
-    <br />
-    <button type="submit" class="btn btn-success">Save</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form>
+    <form asp-action="AddVideo" method="post">
+        <div class="input-group">
+            <label asp-for="Title" class="input-label"></label>
+            <input asp-for="Title" class="input-field" placeholder="Enter video title..." />
+            <span asp-validation-for="Title" class="error-message"></span>
+        </div>
+
+        <button type="submit" class="btn-submit">Save</button>
+        <a asp-action="Index" class="btn-cancel">Cancel</a>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    /* Mobilga moslashtirilgan */
+    .video-form-container {
+        max-width: 400px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    .input-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .input-field {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+        .input-field:focus {
+            border-color: #007bff;
+            box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.3);
+        }
+
+    .error-message {
+        font-size: 12px;
+        color: red;
+        margin-top: 5px;
+    }
+
+    .btn-submit, .btn-cancel {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-submit {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        margin-bottom: 10px;
+    }
+
+        .btn-submit:hover {
+            background: #0056b3;
+        }
+
+    .btn-cancel {
+        background: #ccc;
+        color: #333;
+    }
+
+        .btn-cancel:hover {
+            background: #bbb;
+        }
+</style>

@@ -3,7 +3,8 @@
 @model IQueryable<VideoMetadata>
 
 <h2 class="page-title">Video List</h2>
-<a asp-action="AddVideo" class="btn btn-primary">Add Video</a>
+<a asp-action="AddVideo" class="btn btn-add">➕ Add Video</a>
+
 <div class="table-container">
     <table class="modern-table">
         <thead>
@@ -20,86 +21,122 @@
                     <td>@video.Id</td>
                     <td>@video.Title</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@video.Id" class="btn edit-btn">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@video.Id" class="btn delete-btn">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@video.Id" class="btn edit-btn">✏️ Edit</a>
+                        <a asp-action="Delete" asp-route-id="@video.Id" class="btn delete-btn">🗑️ Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
 <style>
+    /* Asosiy sahifa uchun */
     .page-title {
+        text-align: center;
         font-size: 24px;
-        color: #333;
-        font-weight: 600;
+        font-weight: bold;
         margin-bottom: 20px;
+        color: #333;
     }
 
-    /* Table Container */
+    /* "Add Video" tugmasi */
+    .btn-add {
+        display: block;
+        width: 90%;
+        max-width: 400px;
+        margin: 0 auto 20px;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        background: #007bff;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-add:hover {
+            background: #0056b3;
+        }
+
+    /* Jadval uchun konteyner */
     .table-container {
+        width: 100%;
         overflow-x: auto;
+        padding: 10px;
     }
 
-    /* Modern Table Styling */
+    /* Jadval uslubi */
     .modern-table {
         width: 100%;
         border-collapse: collapse;
-        border-radius: 8px;
+        border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background: white;
     }
 
-    .modern-table th, .modern-table td {
-        padding: 12px 16px;
-        text-align: left;
-    }
+        /* Jadval sarlavhalari */
+        .modern-table thead {
+            background: #007bff;
+            color: white;
+        }
 
-    .modern-table thead {
-        background-color: #f4f4f9;
-        color: #333;
-        font-weight: 600;
-    }
+        .modern-table th, .modern-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
 
-    .modern-table tr {
-        border-bottom: 1px solid #e0e0e0;
-        transition: background-color 0.2s ease;
-    }
+        /* Alternativ qatorlar */
+        .modern-table tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
 
-    .modern-table tr:hover {
-        background-color: #f9f9f9;
-    }
-
-    /* Buttons */
+    /* Tugmalar */
     .btn {
-        padding: 6px 12px;
+        display: inline-block;
+        padding: 8px 12px;
+        font-size: 14px;
+        font-weight: bold;
         border-radius: 6px;
         text-decoration: none;
-        font-size: 14px;
-        font-weight: 500;
-        display: inline-block;
-        transition: background-color 0.2s ease, transform 0.1s ease;
+        transition: all 0.3s ease;
     }
 
     .edit-btn {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
+        background: #ffc107;
+        color: black;
     }
 
-    .edit-btn:hover {
-        background-color: #45a049;
-        transform: scale(1.05);
-    }
+        .edit-btn:hover {
+            background: #e0a800;
+        }
 
     .delete-btn {
-        background-color: #f44336;
+        background: #dc3545;
         color: white;
-        border: none;
     }
 
-    .delete-btn:hover {
-        background-color: #d32f2f;
-        transform: scale(1.05);
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+    /* Mobil versiya */
+    media (max-width: 600px) {
+        .modern-table th, .modern-table td
+
+    {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
     }
 </style>
