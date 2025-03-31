@@ -18,19 +18,21 @@ namespace Stream.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
         {
-            const int pageSize = 500; 
-            IQueryable<VideoMetadata> videos = this.storageBroker.SelectAllVideoMetadatas();
+            int pageSize = 50; // Har sahifada 50 ta video
+            int totalVideos = await this.storageBroker.SelectAllVideoMetadatas().CountAsync();
+            int totalPages = (int)Math.Ceiling((double)totalVideos / pageSize);
 
-            var videoList = await videos.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
-
-            var totalVideos = await videos.CountAsync();
-
-            var totalPages = (int)Math.Ceiling(totalVideos / (double)pageSize);
+            List<VideoMetadata> videos = await this.storageBroker
+                .SelectAllVideoMetadatas()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
+            ViewBag.PageGroupSize = 10; // 10 ta sahifa raqami ko'rinadi
 
-            return View(videoList);
+            return View(videos);
         }
 
         public async Task<IActionResult> AddVideo()
