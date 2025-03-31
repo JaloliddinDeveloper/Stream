@@ -25,7 +25,7 @@ namespace Stream.Controllers
         {
             var filler = CreateVideoFiller();
 
-            for (int i = 0; i < 500000; i++)
+            for (int i = 0; i < 50000; i++)
             {
                 var video = filler.Create();
                 await this.storageBroker.InsertVideoMetadataAsync(video);
