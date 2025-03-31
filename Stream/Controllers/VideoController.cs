@@ -21,7 +21,8 @@ namespace Stream.Controllers
             return View(videos);
         }
 
-        [HttpPost]
+      
+
         public async Task<IActionResult> AddVideo()
         {
             var filler = CreateVideoFiller();
@@ -42,22 +43,24 @@ namespace Stream.Controllers
 
             string[] titles =
             {
-                 "Introduction to C#",
-                 "Blazor for Beginners",
-                 "ASP.NET Core MVC Guide",
-                 "Entity Framework Best Practices",
-                 "Deploying .NET Apps",
-                 "Microservices with .NET",
-                 "Cloud Computing with Azure",
-                 "Building RESTful APIs",
-                 "Machine Learning in .NET",
-                 "Advanced LINQ Techniques"
-            };
+        "Introduction to C#",
+        "Blazor for Beginners",
+        "ASP.NET Core MVC Guide",
+        "Entity Framework Best Practices",
+        "Deploying .NET Apps",
+        "Microservices with .NET",
+        "Cloud Computing with Azure",
+        "Building RESTful APIs",
+        "Machine Learning in .NET",
+        "Advanced LINQ Techniques"
+    };
 
             filler.Setup()
+                .OnProperty(video => video.Id).Use(0) // ✅ IDENTITY ustuniga SQL avtomatik qiymat berishi uchun
                 .OnProperty(video => video.Title).Use(() => titles[random.Next(titles.Length)]);
 
             return filler;
         }
+
     }
 }
