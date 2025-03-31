@@ -31,12 +31,23 @@
 </div>
 
 <div class="pagination">
+    @{
+        int pageGroupSize = ViewBag.PageGroupSize;
+        int startPage = ((ViewBag.CurrentPage - 1) / pageGroupSize) * pageGroupSize + 1;
+        int endPage = Math.Min(startPage + pageGroupSize - 1, ViewBag.TotalPages);
+    }
+
+    @if (startPage > 1)
+    {
+        <a asp-action="Index" asp-route-page="@(startPage - pageGroupSize)" class="btn pagination-btn">« Previous 10</a>
+    }
+
     @if (ViewBag.CurrentPage > 1)
     {
         <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" class="btn pagination-btn">« Previous</a>
     }
 
-    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    @for (int i = startPage; i <= endPage; i++)
     {
         if (i == ViewBag.CurrentPage)
         {
@@ -52,8 +63,12 @@
     {
         <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" class="btn pagination-btn">Next »</a>
     }
-</div>
 
+    @if (endPage < ViewBag.TotalPages)
+    {
+        <a asp-action="Index" asp-route-page="@(endPage + 1)" class="btn pagination-btn">Next 10 »</a>
+    }
+</div>
 
 <style>
     /* Asosiy sahifa uchun */
